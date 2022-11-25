@@ -1,4 +1,5 @@
 import numpy as np
+import simpy
 import simpy as sip
 from collections import deque
 
@@ -20,23 +21,23 @@ class Message():
 
     def request_server(self, env, server):
         """
-        Request a server to be allocated to do the work of the message.
-        Yield server
+        Request a server to be allocated to do the work of the message and execute job when server is freed.
+        Also, log timestamps for waiting time before reaching server/ in queue and total execution time.
         :param env: simpy.environment object
         :param server: server instance to process the message
         :return:
         """
         start_request_time = env.now
-        current_queue.append(self.id)
+        current_queue.appendleft(self.id)
 
         # getting a process token
         with server.resource.request() as cur_request:
             yield cur_request
             # Found server
-            # remove first elem from collections.deque
-            current_queue.pop()
+            # remove element if process granted access to server
+            current_queue.remove(self.id)
             entry_time = env.now
-            #
+            # do job in current message
             yield env.process(server.do_job(self))
             exit_time = env.now
 
@@ -55,11 +56,12 @@ class Message():
 class Server(object):
 
     def __init__(self, env, n, mu, resource_func=sip.Resource):
-        # change resource function for different queuing order
+        # pass the number of servers to the resource function
         self.resource = resource_func(env, n)
         self.env = env
         self.mu = mu
         self.n = n
+        # change resource function for different queuing order
         self.resource_f = resource_func
 
     def __repr__(self):
@@ -75,10 +77,13 @@ class Server(object):
     def set_queue_type(self, new_resource_func):
         """
         Change the type of the queue used.
-        :param new_resource_func: simpy resources class or custom
+        :param new_resource_func: simpy resources class
         :return: void
         """
         self.resource = new_resource_func
+        assert isinstance(self.resource, sip.resources), \
+        f"new resource is not of type {type(sip.Resource)}" \
+        f" but of type {type(self.resource)}"
         return None
 
     def do_job(self, message):
@@ -102,15 +107,25 @@ def des_simulation(env, n, mu, lamd, mean_duration_work, a, b, queue_type):
     :param b: service-time distribution function with mean (mean_duration_work) generating (random) numbers according to some distibution
     :return: void
     """
-
-    # Create the store
+    # Generate as many servers as needed
     cur_server = Server(env, n, mu, queue_type)
+    # Give incomming messages unique idss such that we can identify them later.
     id = 0
+    # keep generating messages in whilst Servers process them
+    # now the queue can grow up if rho > 1
     while True:
+        # generate new message with some duration_work according to b
         cur_message = Message(env, b(mean_duration_work), id)
         id += 1
+
+        # enter queue and wait until served
         env.process(cur_message.request_server(env, cur_server))
-        yield env.timeout(a(lamd))
+
+        if n ==1:
+            # may want to simulate multiple servers with a single one than use this.
+            yield env.timeout(a(lamd)/n)
+        else:
+            yield env.timeout(a(lamd)) # not sure if this works
 
 
 def main_des(max_iter, n, mu, lamd, mean_duration_work, a=np.random.poisson, b=np.random.poisson,
@@ -122,10 +137,10 @@ def main_des(max_iter, n, mu, lamd, mean_duration_work, a=np.random.poisson, b=n
 
 
 if __name__ == "__main__":
-    max_iter = 100
+    max_iter = 1000
     n = 1
-    mu = 6
-    lamd = 6
+    mu = 10
+    lamd = 1
     mean_duration_work = 1
     a = np.random.poisson
     b = np.random.poisson
