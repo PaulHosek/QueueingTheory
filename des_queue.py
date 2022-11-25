@@ -16,6 +16,7 @@ class Message():
         self.duration_work = duration_work
         self.id = id
 
+
     def __repr__(self):
         return f"This is an instance of class Message with duration work of {self.duration_work}, id {self.id}."
 
