@@ -129,7 +129,7 @@ def des_simulation(env, n, mu, lamd, mean_duration_work, a, b, queue_type):
             yield env.timeout(a(lamd)) # not sure if this works
 
 
-def main_des(max_iter, n, mu, lamd, mean_duration_work, a=np.random.poisson, b=np.random.poisson,
+def main_des(max_iter, n, mu, lamd, mean_duration_work, a=np.random.exponential, b=np.random.exponential,
              queue_type=sip.Resource):
     env = sip.Environment()
     env.process(des_simulation(env, n, mu, lamd, mean_duration_work, a, b, queue_type))
@@ -143,8 +143,8 @@ if __name__ == "__main__":
     mu = 10
     lamd = 1
     mean_duration_work = 1
-    a = np.random.poisson
-    b = np.random.poisson
+    a = np.random.exponential
+    b = np.random.exponential
     queue_type = sip.Resource
 
     main_des(max_iter, n, mu, lamd, mean_duration_work, a, b, queue_type)
