@@ -130,13 +130,12 @@ class Server(object):
         yield self.env.timeout(message.duration_work)
 
 
-def des_simulation(env, n, mu, lamd, mean_duration_work, a, b, queue_type, experiment_name):
+def des_simulation(env, n, mu, lamd, a, b, queue_type, experiment_name):
     """
     :param n: number of servers
     :param env: simpy environment
     :param mu: capacity per server/ single-server serving rate
     :param lamd: mean inter-arrival time
-    :param mean_duration_work:
     :param a: inter-arrival time distribution function with mean(lamb)
     :param b: service-time distribution function with mean (mean_duration_work) generating (random) numbers according to some distibution
     :param experiment_name: string; name of the logging file
@@ -150,23 +149,17 @@ def des_simulation(env, n, mu, lamd, mean_duration_work, a, b, queue_type, exper
     # now the queue can grow up if rho > 1
     while True:
         # generate new message with some duration_work according to b
-        cur_message = Message(env, b(mean_duration_work), id, experiment_name)
+        cur_message = Message(env, b(mu), id, experiment_name)
         id += 1
 
         # enter queue and wait until served
         env.process(cur_message.request_server(env, cur_server))
+        yield env.timeout(a(lamd))
 
-        if n ==1:
-            # may want to simulate multiple servers with a single one than use this.
-            yield env.timeout(a(lamd)/n)
-        else:
-            yield env.timeout(a(lamd)) # not sure if this works
-
-
-def main_des(max_iter, n, mu, lamd, mean_duration_work, a=np.random.exponential, b=np.random.exponential,
+def main_des(max_iter, n, mu, lamd, a=np.random.exponential, b=np.random.exponential,
              queue_type=sip.Resource, experiment_name="testing"):
     env = sip.Environment()
-    env.process(des_simulation(env, n, mu, lamd, mean_duration_work, a, b, queue_type,experiment_name))
+    env.process(des_simulation(env, n, mu, lamd, a, b, queue_type,experiment_name))
     env.run(until=max_iter)
     print("DES finished.")
 
@@ -176,10 +169,9 @@ if __name__ == "__main__":
     n = 1
     mu = 10
     lamd = 1
-    mean_duration_work = 1
     a = np.random.exponential
     b = np.random.exponential
     queue_type = sip.Resource
     experiment_name = "testing"
 
-    main_des(max_iter, n, mu, lamd, mean_duration_work, a, b, queue_type,experiment_name)
+    main_des(max_iter, n, mu, lamd, a, b, queue_type,experiment_name)
