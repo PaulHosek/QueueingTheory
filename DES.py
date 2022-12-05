@@ -63,7 +63,7 @@ def run_simu(name, queue_type, mu, lamd, imax):
     b = np.random.exponential
 
     for n_servers in n:
-        print(f"rho = {lamd/(1/mu)}")
+        print(f"rho = {lamd/(mu)}")
         t = f"{n_servers}_{name}_{imax}"
         print(t)
 
