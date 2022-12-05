@@ -157,11 +157,12 @@ def des_simulation(env, n, mu, lamd, a, b, queue_type, experiment_name):
         yield env.timeout(a(lamd))
 
 def main_des(max_iter, n, mu, lamd, a=np.random.exponential, b=np.random.exponential,
-             queue_type=sip.Resource, experiment_name="testing"):
+             queue_type=sip.Resource, experiment_name="testing", feedback=True):
     env = sip.Environment()
     env.process(des_simulation(env, n, mu, lamd, a, b, queue_type,experiment_name))
     env.run(until=max_iter)
-    print("DES finished.")
+    if feedback:
+        print("DES finished.")
 
 
 if __name__ == "__main__":
