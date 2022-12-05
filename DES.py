@@ -3,6 +3,7 @@ import Message as ms
 
 import simpy as sip
 import numpy as np
+import pandas as pd
 
 
 def des_simulation(env, n, mu, lamd, a, b, queue_type, experiment_name):
@@ -40,8 +41,8 @@ def main_des(max_iter, n, mu, lamd, a, b, queue_type, experiment_name):
     # print(f"DES {n} servers finished.")
 
 
-def loading_bar(i):
-    if i == 99:
+def loading_bar(i, imax):
+    if i == imax - 1:
         done = 10 * u"\u2588"
         print(f"Running simulations: {done}")
     else:
@@ -49,11 +50,38 @@ def loading_bar(i):
                 loading = '+'
         else:
             loading = 'x'
-        done, todo = int(i/10) * u"\u2588", int(np.floor((100 - i) / 10)-1) * "_"
+        done, todo = int(10 * i/imax) * u"\u2588", (int(np.floor((imax - i) / imax) * 10) -1) * "_"
         print(f"Running simulations: {done}{loading}{todo}", end ='\r', flush=True)
 
 
-def des_tests():
-    """ TO DO: add tests 
-    """
-    pass
+def run_simu(name, queue_type, mu, lamd, imax):
+    max_iter = 1000
+    n = [1, 2, 4]
+    # mu = 10/11
+    # lamd = 10
+    a = np.random.exponential
+    b = np.random.exponential
+
+    for n_servers in n:
+        print(f"rho = {lamd/(1/mu)}")
+        t = f"{n_servers}_{name}_{imax}"
+        print(t)
+
+        for i in range(imax):
+            loading_bar(i, imax)
+            main_des(max_iter, n_servers, mu, lamd/n_servers, a, b, queue_type, t)
+        print("")
+
+
+def waiting_times(name):
+    res_dict = {}
+    cutoffs = {}
+    for n in [1,2,4]:
+        t = f"{n}_{name}"
+        res = pd.read_csv(f"logged_data/{t}.csv")
+        # print(f'Mean waiting time with {n} server')
+        # print(np.mean(res["wait_time"]))
+        res_dict[n] = res["wait_time"]
+        cutoffs[n] = list(res['ID'].loc[res['ID'] == 0].index)
+
+    return res_dict, cutoffs
