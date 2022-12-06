@@ -3,8 +3,8 @@
 
 ## Contributors:
 
-* Paul Hosek (2753446)
-* Marcel van de Lagemaat (10886699)
+* Paul Hosek
+* Marcel van de Lagemaat
 
 ## Program Overview
 Goal of this work is to compare different Server-Client queueing models.
