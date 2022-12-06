@@ -34,12 +34,9 @@ The authors hope this will simplify review of the codebase at later points in ti
 | Server.py     | Entails the Server class.  |
 | distibutions.py     | Different distributions to use as arrival- or serving-rates distibutions. |
 | Message.py     | Entails the Message class. |
-| old (directory)     | holds files not used anylonger |
+| Old (directory)     | holds files not used anylonger |
 | plotting.py     | Plotting functions for the distibution plots and rho by waiting time. |
-| segnificance.py     | Functions to generate, load and plot the relation between rho and hypothesis-test significance levels. |
+| significance.py     | Functions to generate, load and plot the relation between rho and hypothesis-test significance levels. |
 | gen_data.py     | Should be called in console. Simulates n means for different rhos and saves them as csv. Shows progress bar in console. |
 | Images (directory)     | Images for the report. |
-| signif_data | CSV files holding t-test comparison results for different models. |
-| lorem | lorem |
-| lorem | lorem |
-| lorem | lorem |
+| signif_data (directory) | CSV files holding t-test comparison results for different models. |
