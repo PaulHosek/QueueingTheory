@@ -45,7 +45,7 @@ class Message():
         with open(os.path.join("logged_data", experiment_name+".csv"), "a") as f:
 
             wr = csv.writer(f)
-            wr.writerow([experiment_name,item_id,queue_len, start_request_time,entry_time,exit_time,wait_time])
+            wr.writerow([item_id,wait_time])
         return None
 
 
