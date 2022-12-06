@@ -3,8 +3,8 @@
 
 ## Contributors:
 
-* Paul Hosek (2753446)
-* Marcel van de Lagemaat (10886699)
+* Paul Hosek
+* Marcel van de Lagemaat
 
 ## Program Overview
 Goal of this work is to compare different Server-Client queueing models.
@@ -39,7 +39,7 @@ The authors hope this will simplify review of the codebase at later points in ti
 | segnificance.py     | Functions to generate, load and plot the relation between rho and hypothesis-test significance levels. |
 | gen_data.py     | Should be called in console. Simulates n means for different rhos and saves them as csv. Shows progress bar in console. |
 | Images (directory)     | Images for the report. |
-| segnif_data | CSV files holding t-test comparison results for different models. |
+| signif_data | CSV files holding t-test comparison results for different models. |
 | lorem | lorem |
 | lorem | lorem |
 | lorem | lorem |
