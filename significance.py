@@ -13,6 +13,7 @@ from scipy.stats import ttest_ind
 plt.figure()
 plt.close('all')
 plt.rcParams["font.size"] = 15
+
 def find_lowest_sign(col1,col2,alpha):
     """Find min entries needed for significance."""
     right = len(col1)-1
