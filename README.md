@@ -16,6 +16,7 @@ Goal of this work is to compare different Server-Client queueing models.
 * matplotlib
 * simpy
 * pandas
+* csv
 
 ## Running the code
 
@@ -29,8 +30,16 @@ The authors hope this will simplify review of the codebase at later points in ti
 | File Name           | Description                                                                                                                                                                                          |
 |---------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 |Final Notebook | Named "MarcelvandeLagemaat_10886699_PaulHosek_12637033_1.ipynb". This notebook aggregates all the rest of the respository.|
-| des_queue.py   | Includes both Server and Message classes as well as des_simulation to run a discrete event model simulation for a specific queue and parameters on these.                                                                    |
-| lorem     | lorem |
-| lorem     | lorem |
-| lorem     | lorem |
-| lorem     | lorem |
+| DES.py   | Includes both Server and Message classes as well as des_simulation to run a discrete event model simulation for a specific queue and parameters on these.                                                                    |
+| Server.py     | Entails the Server class.  |
+| distibutions.py     | Different distributions to use as arrival- or serving-rates distibutions. |
+| Message.py     | Entails the Message class. |
+| old (directory)     | holds files not used anylonger |
+| plotting.py     | Plotting functions for the distibution plots and rho by waiting time. |
+| segnificance.py     | Functions to generate, load and plot the relation between rho and hypothesis-test significance levels. |
+| gen_data.py     | Should be called in console. Simulates n means for different rhos and saves them as csv. Shows progress bar in console. |
+| Images (directory)     | Images for the report. |
+| segnif_data | CSV files holding t-test comparison results for different models. |
+| lorem | lorem |
+| lorem | lorem |
+| lorem | lorem |
