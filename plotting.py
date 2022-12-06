@@ -20,6 +20,8 @@ def confidint(sigma, n, z):
 
 
 def rho_v_wait(smallname):
+    """ PLots the mean waiting values for increasing rho values
+    """
     mulamb = [(1,1.2), (1,1.1), (1,1.06), (1,1.02), (1,1.01)]
     c = ['_', 'blue', 'black', '_', 'red']
     line = ['_', '-', ':', '_', '-']
@@ -53,6 +55,8 @@ def rho_v_wait(smallname):
 
 
 def plots(res_dict, cutoffs):
+    """ Plots the distribution and histogram for the mean waiting times
+    """
     c = ['_', 'blue', 'black', '_', 'red']
     fig, ax = plt.subplots()
     for n in [4,2,1]:

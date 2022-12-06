@@ -1,6 +1,6 @@
 import numpy as np
 
-def hyperexponential(seed_1=None, seed_2=None, loopidx=None):
+def hyperexponential(mu, seed_1=None, seed_2=None, loopidx=None):
     """
     Generate long-tailed hyperexponential distribution.
     :param seed_1:
@@ -21,4 +21,3 @@ def hyperexponential(seed_1=None, seed_2=None, loopidx=None):
 def constant_dist(mean):
     """Constant distribution."""
     return mean
-

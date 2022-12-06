@@ -1,5 +1,6 @@
 import Server as sv
 import Message as ms
+import distributions as db
 
 import simpy as sip
 import numpy as np
@@ -57,8 +58,6 @@ def loading_bar(i, imax):
 def run_simu(name, queue_type, mu, lamd, imax):
     max_iter = 5000
     n = [1, 2, 4]
-    # mu = 10/11
-    # lamd = 10
     a = np.random.exponential
     b = np.random.exponential
 
