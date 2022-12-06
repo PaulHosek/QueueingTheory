@@ -55,7 +55,7 @@ def loading_bar(i, imax):
 
 
 def run_simu(name, queue_type, mu, lamd, imax):
-    max_iter = 1000
+    max_iter = 5000
     n = [1, 2, 4]
     # mu = 10/11
     # lamd = 10
@@ -63,7 +63,7 @@ def run_simu(name, queue_type, mu, lamd, imax):
     b = np.random.exponential
 
     for n_servers in n:
-        print(f"rho = {lamd/(mu)}")
+        print(f"rho = {(1/lamd)/(mu)}")
         t = f"{n_servers}_{name}_{imax}"
         print(t)
 

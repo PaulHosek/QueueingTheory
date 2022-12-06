@@ -37,7 +37,7 @@ class Message():
         if not my_file.is_file():
             with open(os.path.join("logged_data", experiment_name+".csv"),"w+") as f:
                 wr = csv.writer(f)
-                wr.writerow(["experiment_name","ID","Queue_length","start_request_time","entry_time","exit_time","wait_time"])
+                wr.writerow(["ID","wait_time"])
 
         # log the data
         # cur_time = datetime.now()
